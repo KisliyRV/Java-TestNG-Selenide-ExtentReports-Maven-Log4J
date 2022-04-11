@@ -25,7 +25,7 @@ public abstract class BaseActions {
      * @param url the URL to navigate
      */
     protected void openUrl(String url) {
-        if(WebDriverRunner.hasWebDriverStarted()) {
+        if (WebDriverRunner.hasWebDriverStarted()) {
             Selenide.clearBrowserCookies();
             Selenide.clearBrowserLocalStorage();
         }

@@ -1,9 +1,7 @@
 package ua.com.usource.elements;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
-import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
 /**
@@ -11,15 +9,9 @@ import static com.codeborne.selenide.Selenide.$x;
  */
 public class WebNavigationElements extends BaseElements {
 
-    private final ElementsCollection divList = $$x("//div");
     private final SelenideElement aboutPageLink = $x("//a[@href='/about']");
     private final SelenideElement signInPageLink = $x("//a[@href='/login']");
     private final SelenideElement signUpPageLink = $x("//a[@href='/register']");
-
-    @Override
-    public void waitForDisplayed() {
-        waiter.waitForElementsToBeInitialized(divList);
-    }
 
     public void clickAboutLink() {
         logger.info("Clicking the About link");
