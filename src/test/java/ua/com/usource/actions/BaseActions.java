@@ -4,10 +4,13 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ua.com.usource.common.core.context.TestContext;
-import ua.com.usource.common.core.helpers.WaitHelper;
 
-import static com.codeborne.selenide.Selenide.$x;
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selenide.open;
 
 /**
@@ -16,7 +19,6 @@ import static com.codeborne.selenide.Selenide.open;
 public abstract class BaseActions {
 
     protected static Logger logger = LogManager.getLogger(BaseActions.class);
-    protected static WaitHelper waiter = new WaitHelper();
 
     /**
      * Open browser and navigates to the defined URL.
@@ -46,6 +48,7 @@ public abstract class BaseActions {
      */
     private static void waitForPageLoadComplete(int maxTimeOutSec) {
         logger.info("Waiting while loading..");
-        waiter.waitFor(() -> !$x("//*[contains(text(), 'Loading')]").isDisplayed(), maxTimeOutSec);
+        WebDriverWait waitForSpinner = new WebDriverWait(WebDriverRunner.getWebDriver(), Duration.ofSeconds(maxTimeOutSec));
+        waitForSpinner.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(), 'Loading')]")));
     }
 }
