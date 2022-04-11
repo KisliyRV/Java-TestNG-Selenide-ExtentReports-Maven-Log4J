@@ -24,8 +24,7 @@ mvn clean test site -Durl=https://usource.com.ua/ -Dbrowser=chrome -Dtest=Exampl
 To get the execution report, use maven `site` command and find the result in the `target\test-report\report.html` file.
 
 NOTE: It's required to install and add to the PATH:
- - [Java](https://java.com/en/download/);
- - [Maven](https://maven.apache.org/download.cgi);
- - [Node.js](https://nodejs.org/en/download/);
- - [Appium](http://appium.io/).
+
+- [Java](https://java.com/en/download/);
+- [Maven](https://maven.apache.org/download.cgi).
  
