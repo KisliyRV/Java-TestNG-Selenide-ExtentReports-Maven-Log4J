@@ -18,13 +18,13 @@ import java.lang.reflect.Method;
  * Class contains common methods and fields for all tests
  */
 @Listeners({ScreenShooter.class, TestListener.class})
-public abstract class BaseTests {
+public abstract class BaseTest {
 
-    protected static Logger logger = LogManager.getLogger(BaseTests.class);
+    protected static Logger logger = LogManager.getLogger(BaseTest.class);
 
     private NavigationActions navigation;
 
-    public BaseTests() {
+    public BaseTest() {
     }
 
     /**

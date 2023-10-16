@@ -7,7 +7,7 @@ import ua.com.usource.common.enums.Pages;
 /**
  * The class contains test methods for the Web functionality
  */
-public class ExampleTest extends BaseTests {
+public class ExampleTest extends BaseTest {
 
     @Test(description = "Test example")
     public void testExample() {

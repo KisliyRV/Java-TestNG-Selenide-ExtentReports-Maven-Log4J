@@ -6,5 +6,6 @@ test-output
 *.log
 *.iml
 *.class
+*.DS_Store
 _classpath.xml
 _project.xml
