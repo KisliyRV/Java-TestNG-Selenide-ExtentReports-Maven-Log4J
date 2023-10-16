@@ -21,10 +21,15 @@ mvn clean test site -Durl=https://usource.com.ua/ -Dbrowser=chrome -Dtest=Exampl
 ```
 
 ## Test Execution Report:
+
 To get the execution report, use maven `site` command and find the result in the `target\test-report\report.html` file.
 
 NOTE: It's required to install and add to the PATH:
 
 - [Java](https://java.com/en/download/);
 - [Maven](https://maven.apache.org/download.cgi).
+
+Also, in order to be able to execute tests using the Scripted Pipeline, it is required to have Jenkins environment with
+a Pipeline type job (that will call the script from the project)
+and a Freestyle type job with the 'ATExecutor' name (as a main test executor, configured in the pipeline script).
  

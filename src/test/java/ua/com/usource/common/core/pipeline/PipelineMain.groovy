@@ -18,7 +18,8 @@ pipeline {
                                 'BROWSER_VERSION': BROWSER_VERSION,
                                 'TESTS_SCOPE'    : TESTS_SCOPE,
                                 'TIMEOUT'        : TIMEOUT,
-                                'THREADS_COUNT'  : THREADS_COUNT])
+                                'THREADS_COUNT'  : THREADS_COUNT,
+                                'BRANCH'         : BRANCH])
             }
         }
     }
