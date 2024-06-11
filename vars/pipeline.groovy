@@ -11,7 +11,7 @@ node {
     stage('Checkout') {
         checkout([$class: 'GitSCM',
                   branches: [[name: '${BRANCH}']],
-                  userRemoteConfigs: [[url: '${GIT_URL}']]])
+                  userRemoteConfigs: [[url: 'https://github.com/Zhuravl/Java-TestNG-Selenide-ExtentReports-Maven-Log4J.git']]])
     }
     stage('Smoke') {
         sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
