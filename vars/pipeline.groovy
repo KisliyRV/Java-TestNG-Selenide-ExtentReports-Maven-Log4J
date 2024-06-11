@@ -3,9 +3,8 @@ node {
     env.PATH = "${tool 'Maven'}/bin:${env.PATH}"
 
     def MAX_RUNS = 5
-    def runNumber = 1
     def scope = '${TESTS_SCOPE}'
-    def threads = '${THREADS_COUNT}'
+    int threads = '${THREADS_COUNT}' as int
 
     echo "The Regression has been started!"
     stage('Checkout') {
