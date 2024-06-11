@@ -1,5 +1,7 @@
 node {
 
+    env.PATH = "${tool 'Maven'}/bin:${env.PATH}"
+
     def MAX_RUNS = 5
     def runNumber = 1
     def scope = '${TESTS_SCOPE}'
