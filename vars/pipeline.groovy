@@ -4,7 +4,7 @@ node {
 
     def MAX_RUNS = 5
     def scope = '${TESTS_SCOPE}'
-    int threads = '${THREADS_COUNT}' as int
+    def threads = '${THREADS_COUNT}' as Integer
 
     echo "The Regression has been started!"
     stage('Checkout') {
