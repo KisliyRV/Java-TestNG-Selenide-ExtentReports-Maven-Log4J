@@ -1,6 +1,6 @@
 node {
 
-    env.PATH = "${tool 'Git'}/bin:${tool 'Maven'}/bin:${env.PATH}"
+    env.PATH = "${tool 'Maven'}/bin:${env.PATH}"
 
     def MAX_RUNS = 5
     def runNumber = 1
