@@ -6,11 +6,11 @@ node {
     def threads = '${THREADS_COUNT}'
 
     echo "The Regression has been started!"
-    stage('Checkout') {
-        checkout([$class: 'GitSCM',
-                  branches: [[name: '${BRANCH}']],
-                  userRemoteConfigs: [[url: '${GIT_URL}']]])
-    }
+//    stage('Checkout') {
+//        checkout([$class: 'GitSCM',
+//                  branches: [[name: '${BRANCH}']],
+//                  userRemoteConfigs: [[url: '${GIT_URL}']]])
+//    }
     stage('Smoke') {
         sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
     }
