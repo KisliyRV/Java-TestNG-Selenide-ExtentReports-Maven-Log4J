@@ -20,16 +20,17 @@ node {
             stage("Execution #${run}") {
                 try {
                     sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=${threads}"
-                } finally {
-                    scope = getFailedTests()
-                    if (scope == null || scope.isEmpty()) {
-                        //All tests passed - moving to the next stage
-                        sh 'exit 0'
-                    } else {
-                        //Some tests failed - reducing the number of threads and re-running with the updated scope (the failed tests only)
-                        threads = reduceThreads(threads)
-                    }
+                } catch (Exception ignored) {
+                    //Do nothing here and just move forward
                 }
+            }
+            scope = getFailedTests()
+            if (scope == null || scope.isEmpty()) {
+                //All tests passed - moving to the next stage
+                return
+            } else {
+                //Some tests failed - reducing the number of threads and re-running with the updated scope (the failed tests only)
+                threads = reduceThreads(threads)
             }
         }
     }
