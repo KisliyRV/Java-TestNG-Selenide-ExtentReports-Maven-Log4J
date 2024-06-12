@@ -16,7 +16,7 @@ node {
 //        sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
 //    }
     stage('Regression') {
-        for (int run in 1..MAX_RUNS) {
+        for (Integer run in 1..MAX_RUNS) {
             stage("Execution #${run}") {
                 try {
                     sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=10"
