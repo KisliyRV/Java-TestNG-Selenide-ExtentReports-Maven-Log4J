@@ -12,9 +12,9 @@ node {
                   branches: [[name: '${BRANCH}']],
                   userRemoteConfigs: [[url: 'https://github.com/Zhuravl/Java-TestNG-Selenide-ExtentReports-Maven-Log4J.git']]])
     }
-//    stage('Smoke') {
-//        sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
-//    }
+    stage('Smoke') {
+        sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
+    }
     stage('Regression') {
         for (int run = 1; run <= MAX_RUNS; run++) {
             stage("Execution #${run}") {
@@ -38,7 +38,7 @@ node {
 }
 
 static String getFailedTests() {
-    return null
+    return "ExampleThreeTest"
 }
 
 static int reduceThreads(int threads) {
