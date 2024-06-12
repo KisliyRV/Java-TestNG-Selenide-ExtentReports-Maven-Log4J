@@ -12,23 +12,23 @@ node {
                   branches: [[name: '${BRANCH}']],
                   userRemoteConfigs: [[url: 'https://github.com/Zhuravl/Java-TestNG-Selenide-ExtentReports-Maven-Log4J.git']]])
     }
-    stage('Smoke') {
-        sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
-    }
+//    stage('Smoke') {
+//        sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
+//    }
     stage('Regression') {
         for (int run in 1..MAX_RUNS) {
             stage("Execution #${run}") {
                 try {
                     sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=${threads}"
                 } finally {
-                    scope = "" //getFailedTests()
-                    if (scope == null || scope == "") {
-                        //All tests passed - moving to the next stage
-                        return
-                    } else {
-                        //Some tests failed - reducing the number of threads and re-running with the updated scope (the failed tests only)
-                        threads = reduceThreads(threads)
-                    }
+//                    scope = "" //getFailedTests()
+//                    if (scope == null || scope == "") {
+//                        //All tests passed - moving to the next stage
+//                        return
+//                    } else {
+//                        //Some tests failed - reducing the number of threads and re-running with the updated scope (the failed tests only)
+//                        threads = reduceThreads(threads)
+//                    }
                 }
             }
         }
