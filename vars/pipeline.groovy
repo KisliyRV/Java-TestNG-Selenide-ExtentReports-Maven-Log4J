@@ -2,7 +2,7 @@ node {
 
     env.PATH = "${tool 'Maven'}/bin:${env.PATH}"
 
-    Integer MAX_RUNS = 5
+    int MAX_RUNS = 5
     String scope = "${TESTS_SCOPE}" as String
     Integer threads = "${THREADS_COUNT}" as Integer
 
@@ -16,10 +16,10 @@ node {
 //        sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
 //    }
     stage('Regression') {
-        for (Integer run in 1..MAX_RUNS) {
+        for (int run = 1; run <= MAX_RUNS; run++) {
             stage("Execution #${run}") {
                 try {
-                    sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=10"
+                    sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=${threads}"
                 } finally {
                     scope = "" //getFailedTests()
                     if (scope == null || scope == "") {
