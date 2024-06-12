@@ -4,7 +4,7 @@ node {
 
     def MAX_RUNS = 5
     def scope = '${TESTS_SCOPE}'
-    def threads = '${THREADS_COUNT}' as Integer
+    int threads = '${THREADS_COUNT}' as int
 
     echo "The Regression has been started!"
     stage('Checkout') {
@@ -19,7 +19,7 @@ node {
         for (int run in 1..MAX_RUNS) {
             stage("Execution #${run}") {
                 try {
-                    sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=${threads}"
+                    sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=${(threads as String)}"
                 } finally {
                     scope = "" //getFailedTests()
                     if (scope == null || scope == "") {
@@ -35,9 +35,6 @@ node {
     }
     post {
         always {
-            stage('Report') {
-                echo "The Report has been created here!"
-            }
             echo "The Regression has been completed!\nSee results here: ${RUN_DISPLAY_URL}"
         }
     }
