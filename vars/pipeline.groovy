@@ -37,18 +37,10 @@ node {
 }
 
 static String getFailedTests() {
-    echo "Getting failed tests.."
     String result = null
-    echo "The failed tests scope is: '${result}'"
     return result
 }
 
 static int reduceThreads(int threads) {
-    echo "Reducing the number of threads from ${threads}.."
-    int result = 1
-    if (threads > 2) {
-        result = (int) (threads * 0.7)
-    }
-    echo "Reduced number of threads to ${result}"
-    return result
+    if (threads < 2) return 1 else return (int) (threads * 0.7)
 }
