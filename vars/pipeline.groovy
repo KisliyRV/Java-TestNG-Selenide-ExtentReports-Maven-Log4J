@@ -24,7 +24,7 @@ node {
                     scope = getFailedTests()
                     if (scope == null || scope.isEmpty()) {
                         //All tests passed - moving to the next stage
-                        return
+                        currentBuild.result = 'SUCCESS'
                     } else {
                         //Some tests failed - reducing the number of threads and re-running with the updated scope (the failed tests only)
                         threads = reduceThreads(threads)
@@ -37,8 +37,7 @@ node {
 }
 
 static String getFailedTests() {
-    String result = null
-    return result
+    return null
 }
 
 static int reduceThreads(int threads) {
