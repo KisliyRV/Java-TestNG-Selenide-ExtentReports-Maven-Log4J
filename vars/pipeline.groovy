@@ -21,8 +21,8 @@ node {
                 try {
                     sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=${threads}"
                 } finally {
-                    scope = "" //getFailedTests()
-                    if (scope == null || scope == "") {
+                    scope = getFailedTests()
+                    if (scope == null || scope.isEmpty()) {
                         //All tests passed - moving to the next stage
                         return
                     } else {
@@ -33,9 +33,22 @@ node {
             }
         }
     }
-    post {
-        always {
-            echo "The Regression has been completed!\nSee results here: ${RUN_DISPLAY_URL}"
-        }
+    echo "The Regression has been completed!"
+}
+
+static String getFailedTests() {
+    echo "Getting failed tests.."
+    String result = null
+    echo "The failed tests scope is: '${result}'"
+    return result
+}
+
+static int reduceThreads(int threads) {
+    echo "Reducing the number of threads from ${threads}.."
+    int result = 1
+    if (threads > 2) {
+        result = (int) (threads * 0.7)
     }
+    echo "Reduced number of threads to ${result}"
+    return result
 }
