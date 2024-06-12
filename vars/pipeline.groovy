@@ -19,7 +19,7 @@ node {
         for (int run in 1..MAX_RUNS) {
             stage("Execution #${run}") {
                 try {
-                    sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=${threads}"
+                    sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=${(threads as String)}"
                 } finally {
                     scope = "" //getFailedTests()
                     if (scope == null || scope == "") {
