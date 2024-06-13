@@ -16,7 +16,7 @@ node {
         sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
     }
     stage('Regression') {
-        def threadsHelper = load 'threadsHelper.groovy'
+        def threadsHelper = load 'vars/threadsHelper.groovy'
         for (int run = 1; run <= MAX_RUNS; run++) {
             stage("Execution #${run}") {
                 try {
