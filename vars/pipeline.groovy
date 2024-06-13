@@ -16,6 +16,7 @@ node {
         sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
     }
     stage('Regression') {
+        def threadsHelper = load 'threadsHelper.groovy'
         for (int run = 1; run <= MAX_RUNS; run++) {
             stage("Execution #${run}") {
                 try {
@@ -30,7 +31,7 @@ node {
                 return
             } else {
                 //Some tests failed - reducing the number of threads and re-running with the updated scope (the failed tests only)
-                threads = reduceThreads(threads)
+                threads = threadsHelper.reduceThreads(threads)
             }
         }
     }
@@ -39,8 +40,4 @@ node {
 
 static String getFailedTests() {
     return "ExampleThreeTest"
-}
-
-static int reduceThreads(int threads) {
-    if (threads < 2) return 1 else return (int) (threads * 0.7)
 }
