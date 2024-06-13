@@ -17,6 +17,7 @@ node {
     }
     stage('Regression') {
         def threadsHelper = load 'vars/threadsHelper.groovy'
+        def scopeHelper = load 'vars/scopeHelper.groovy'
         for (int run = 1; run <= MAX_RUNS; run++) {
             stage("Execution #${run}") {
                 try {
@@ -25,7 +26,7 @@ node {
                     //Do nothing here and just move forward
                 }
             }
-            scope = getFailedTests()
+            scope = scopeHelper.getFailedTests()
             if (scope == null || scope.isEmpty()) {
                 //All tests passed - moving to the next stage
                 return
@@ -36,8 +37,4 @@ node {
         }
     }
     echo "The Regression has been completed!"
-}
-
-static String getFailedTests() {
-    return "ExampleThreeTest"
 }
