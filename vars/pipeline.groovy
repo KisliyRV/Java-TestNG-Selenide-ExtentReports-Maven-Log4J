@@ -25,7 +25,7 @@ node {
         for (int run = 1; run <= MAX_RUNS; run++) {
             stage("Execution #${run}") {
                 try {
-                    jobHelper.launchJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, scope, TIMEOUT as String, threads as String)
+                    jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, scope, TIMEOUT as String, threads as String)
                 } catch (Exception ignored) {
                     //Do nothing here and just move forward
                 }
