@@ -3,8 +3,8 @@ node {
     env.PATH = "${tool 'Maven'}/bin:${env.PATH}"
 
     int MAX_RUNS = 5
-    String scope = "${TESTS_SCOPE}" as String
-    Integer threads = "${THREADS_COUNT}" as Integer
+    String scope = TESTS_SCOPE as String
+    Integer threads = THREADS_COUNT as Integer
 
     echo "The Regression has been started!"
     stage('Checkout') {
@@ -12,8 +12,12 @@ node {
                   branches: [[name: '${BRANCH}']],
                   userRemoteConfigs: [[url: 'https://github.com/Zhuravl/Java-TestNG-Selenide-ExtentReports-Maven-Log4J.git']]])
     }
+    def jobHelper = load 'vars/jobHelper.groovy' //Needs to be called after the checkout stage!
+    stage('Check/Create ATExecutor Job') {
+        jobHelper.createATExecutorJob()
+    }
     stage('Smoke') {
-        sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=ExampleTest -Dtimeout=${TIMEOUT} -DthreadCount=1"
+        jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, 'SmokeTest', TIMEOUT as String, '1')
     }
     stage('Regression') {
         def threadsHelper = load 'vars/threadsHelper.groovy'
@@ -21,7 +25,7 @@ node {
         for (int run = 1; run <= MAX_RUNS; run++) {
             stage("Execution #${run}") {
                 try {
-                    sh "mvn clean test site -Durl=${TARGET_URL} -Dbrowser=${BROWSER_NAME} -Dversion=${BROWSER_VERSION} -Dtest=${scope} -Dtimeout=${TIMEOUT} -DthreadCount=${threads}"
+                    jobHelper.launchJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, scope, TIMEOUT as String, threads as String)
                 } catch (Exception ignored) {
                     //Do nothing here and just move forward
                 }
@@ -35,6 +39,9 @@ node {
                 threads = threadsHelper.reduceThreads(threads)
             }
         }
+    }
+    stage('Report') {
+
     }
     echo "The Regression has been completed!"
 }
