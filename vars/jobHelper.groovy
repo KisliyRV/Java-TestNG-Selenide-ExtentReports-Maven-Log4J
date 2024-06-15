@@ -2,6 +2,7 @@ static def getATExecutorJobName() {
     return 'ATExecutor'
 }
 def launchATExecutorJob(String branch, String targetUrl, String browserName, String browserVersion, String testsScope, String timeout, String threadsCount) {
+    echo "Triggering the '${getATExecutorJobName()}' job..."
     def job = Jenkins.instance.getItem(getATExecutorJobName())
     if (job) {
         def parameters = [
@@ -16,11 +17,13 @@ def launchATExecutorJob(String branch, String targetUrl, String browserName, Str
         def paramsAction = new hudson.model.ParametersAction(parameters) as Object
         def causeAction = new hudson.model.CauseAction(new hudson.model.Cause.UserIdCause()) as Object
         job.scheduleBuild2(0, paramsAction, causeAction)
-        echo "The '${getATExecutorJobName()}' job has been successfully triggered..."
+        job.waitForCompletion()
+        def buildResult = job.result
+        echo "The job execution result is: ${buildResult}"
+        return buildResult
     } else {
         error "Failed to find the '${getATExecutorJobName()}' job!"
     }
-    return job
 }
 def createATExecutorJob() {
     def jobExists = false

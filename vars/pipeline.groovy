@@ -15,11 +15,8 @@ node {
         jobHelper.createATExecutorJob()
     }
     stage('Smoke') {
-        def build = jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, 'SmokeTest', TIMEOUT as String, '1')
-        script {
-            build = build.waitForCompletion()
-        }
-        if (build.result != 'SUCCESS') {
+        def result = jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, 'SmokeTest', TIMEOUT as String, '1')
+        if (result != 'SUCCESS') {
             error "The Smoke Test has been failed!"
         }
     }
@@ -28,10 +25,7 @@ node {
         def scopeHelper = load 'vars/scopeHelper.groovy'
         for (int run = 1; run <= MAX_RUNS; run++) {
             stage("Execution #${run}") {
-                def build = jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, scope, TIMEOUT as String, threads as String)
-                script {
-                    build = build.waitForCompletion()
-                }
+                jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, scope, TIMEOUT as String, threads as String)
             }
             scope = scopeHelper.getFailedTests()
             if (scope == null || scope.isEmpty()) {
