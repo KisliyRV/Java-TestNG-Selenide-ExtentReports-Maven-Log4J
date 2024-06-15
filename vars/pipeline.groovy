@@ -16,7 +16,7 @@ node {
     }
     stage('Smoke') {
         def result = jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, 'SmokeTest', TIMEOUT as String, '1')
-        if (result != 'SUCCESS') {
+        if (result != hudson.model.Result.SUCCESS) {
             error "The Smoke Test has been failed!"
         }
     }
