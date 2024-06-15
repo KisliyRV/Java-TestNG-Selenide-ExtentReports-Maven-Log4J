@@ -16,9 +16,9 @@ def launchATExecutorJob(String branch, String targetUrl, String browserName, Str
         ]
         def paramsAction = new hudson.model.ParametersAction(parameters) as Object
         def causeAction = new hudson.model.CauseAction(new hudson.model.Cause.UserIdCause()) as Object
-        job.scheduleBuild2(0, paramsAction, causeAction)
-        job.waitForCompletion()
-        def buildResult = job.result
+        def build = job.scheduleBuild2(0, paramsAction, causeAction)
+        build.waitForCompletion()
+        def buildResult = build.result
         echo "The job execution result is: ${buildResult}"
         return buildResult
     } else {
