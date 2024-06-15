@@ -1,7 +1,5 @@
 node {
 
-    env.PATH = "${tool 'Maven'}/bin:${env.PATH}"
-
     int MAX_RUNS = 5
     String scope = TESTS_SCOPE as String
     Integer threads = THREADS_COUNT as Integer

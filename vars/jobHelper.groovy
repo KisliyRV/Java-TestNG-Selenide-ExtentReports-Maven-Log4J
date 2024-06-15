@@ -119,14 +119,19 @@ def createATExecutorJob() {
               <triggers/>
               <concurrentBuild>false</concurrentBuild>
               <builders>
-                <hudson.tasks.Shell>
-                  <command>
-                    #!/bin/bash -l
-                    set -x #turn echo on
-                    mvn clean test site -Durl=\${TARGET_URL} -Dbrowser=\${BROWSER_NAME} -Dversion=\${BROWSER_VERSION} -Dtest=\${TESTS_SCOPE} -Dtimeout=\${TIMEOUT} -DthreadCount=\${THREADS_COUNT}
-                  </command>
-                  <configuredLocalRules/>
-                </hudson.tasks.Shell>
+                  <hudson.tasks.Maven>
+                    <targets>clean test site</targets>
+                    <mavenName>Maven 3.9.7</mavenName>
+                    <properties>url=\${TARGET_URL} browser=\${BROWSER_NAME} version=\${BROWSER_VERSION} test=\${TESTS_SCOPE} timeout=\${TIMEOUT} threadCount=\${THREADS_COUNT}</properties>
+                  </hudson.tasks.Maven>
+//                <hudson.tasks.Shell>
+//                  <command>#!/bin/bash -l
+//
+//set -x #turn echo on
+//mvn clean test site -Durl=\${TARGET_URL} -Dbrowser=\${BROWSER_NAME} -Dversion=\${BROWSER_VERSION} -Dtest=\${TESTS_SCOPE} -Dtimeout=\${TIMEOUT} -DthreadCount=\${THREADS_COUNT}
+//                  </command>
+//                  <configuredLocalRules/>
+//                </hudson.tasks.Shell>
               </builders>
               <publishers>
                 <hudson.tasks.ArtifactArchiver>
