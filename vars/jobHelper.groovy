@@ -143,7 +143,7 @@ mvn clean test site -Durl=\${TARGET_URL} -Dbrowser=\${BROWSER_NAME} -Dversion=\$
                   <followSymlinks>true</followSymlinks>
                 </hudson.tasks.ArtifactArchiver>
                 <hudson.plugins.testng.Publisher plugin="testng-plugin@835.v51ed3da_fcc35">
-                  <reportFilenamePattern>**/testng-results.xml</reportFilenamePattern>
+                  <reportFilenamePattern>**/target/testng-results.xml</reportFilenamePattern>
                   <escapeTestDescp>true</escapeTestDescp>
                   <escapeExceptionMsg>true</escapeExceptionMsg>
                   <failureOnFailedTestConfig>false</failureOnFailedTestConfig>
