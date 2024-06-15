@@ -18,8 +18,9 @@ def launchATExecutorJob(String branch, String targetUrl, String browserName, Str
         job.scheduleBuild2(0, paramsAction, causeAction)
         echo "The '${getATExecutorJobName()}' job has been successfully triggered..."
     } else {
-        error "Failed to find the '${getATExecutorJobName()}' job after attempting to create it!"
+        error "Failed to find the '${getATExecutorJobName()}' job!"
     }
+    return job
 }
 def createATExecutorJob() {
     def jobExists = false
