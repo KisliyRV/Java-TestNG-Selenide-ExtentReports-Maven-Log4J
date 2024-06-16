@@ -1,3 +1,6 @@
+import hudson.model.*
+import hudson.util.*
+
 static String getFailedTests() {
     def copiedFile = copyArtifacts(projectName: 'ATExecutor', filter: 'target/surefire-reports/testng-failed.xml')
 
