@@ -33,7 +33,9 @@ node {
 //            echo "Copied file: '${copiedFile}'"
             def copiedFile = readFile('target/surefire-reports/testng-failed.xml')
             if (copiedFile) {
-                def xmlFile = new XmlSlurper().parseText(copiedFile)
+                def parser = new XmlParser(false, false)
+                parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false)
+                def xmlFile = parser.parseText(copiedFile)
                 scope = xmlFile.test.classes.class.'@name'.toString().replaceAll("ua\\.com\\.usource\\.tests\\.", ",").replaceFirst(",", "")
             } else {
                 scope = null
