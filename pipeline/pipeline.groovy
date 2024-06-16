@@ -22,12 +22,19 @@ node {
     }
     stage('Regression') {
         def threadsHelper = load 'pipeline/threadsHelper.groovy'
-        def scopeHelper = load 'pipeline/scopeHelper.groovy'
+//        def scopeHelper = load 'pipeline/scopeHelper.groovy'
         for (int run = 1; run <= MAX_RUNS; run++) {
             stage("Execution #${run}") {
                 jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, scope, TIMEOUT as String, threads as String)
             }
-            scope = scopeHelper.getFailedTests()
+//            scope = scopeHelper.getFailedTests()
+            def copiedFile = copyArtifacts(projectName: 'ATExecutor', filter: 'target/surefire-reports/testng-failed.xml')
+            if (copiedFile) {
+                def xmlFile = new XmlSlurper().parse(copiedFile)
+                scope = xmlFile.test.classes.class.'@name'.toString().replaceAll("ua\\.com\\.usource\\.tests\\.", ",").replaceFirst(",", "")
+            } else {
+                scope = null
+            }
             if (scope == null || scope.isEmpty()) {
                 echo "All regression tests have been passed!"
                 return
