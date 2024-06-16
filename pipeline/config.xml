@@ -102,7 +102,7 @@
             <submoduleCfg class="empty-list"/>
             <extensions/>
         </scm>
-        <scriptPath>vars/pipeline.groovy</scriptPath>
+        <scriptPath>pipeline/pipeline.groovy</scriptPath>
         <lightweight>true</lightweight>
     </definition>
     <triggers/>

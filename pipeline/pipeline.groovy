@@ -10,7 +10,7 @@ node {
                   branches: [[name: '${BRANCH}']],
                   userRemoteConfigs: [[url: 'https://github.com/Zhuravl/Java-TestNG-Selenide-ExtentReports-Maven-Log4J.git']]])
     }
-    def jobHelper = load 'vars/jobHelper.groovy' //Needs to be called after the checkout stage!
+    def jobHelper = load 'pipeline/jobHelper.groovy' //Needs to be called after the checkout stage!
     stage('Check/Create ATExecutor Job') {
         jobHelper.createATExecutorJob()
     }
@@ -21,8 +21,8 @@ node {
         }
     }
     stage('Regression') {
-        def threadsHelper = load 'vars/threadsHelper.groovy'
-        def scopeHelper = load 'vars/scopeHelper.groovy'
+        def threadsHelper = load 'pipeline/threadsHelper.groovy'
+        def scopeHelper = load 'pipeline/scopeHelper.groovy'
         for (int run = 1; run <= MAX_RUNS; run++) {
             stage("Execution #${run}") {
                 jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, scope, TIMEOUT as String, threads as String)
