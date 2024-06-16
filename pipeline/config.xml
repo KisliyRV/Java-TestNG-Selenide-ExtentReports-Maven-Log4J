@@ -1,0 +1,110 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1400.v7fd111b_ec82f">
+    <actions>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction
+                plugin="pipeline-model-definition@2.2198.v41dd8ef6dd56"/>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction
+                plugin="pipeline-model-definition@2.2198.v41dd8ef6dd56">
+            <jobProperties/>
+            <triggers/>
+            <parameters/>
+            <options/>
+        </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+    </actions>
+    <description>This is the Pipeline for the regression testing</description>
+    <keepDependencies>false</keepDependencies>
+    <properties>
+        <jenkins.model.BuildDiscarderProperty>
+            <strategy class="hudson.tasks.LogRotator">
+                <daysToKeep>-1</daysToKeep>
+                <numToKeep>10</numToKeep>
+                <artifactDaysToKeep>-1</artifactDaysToKeep>
+                <artifactNumToKeep>-1</artifactNumToKeep>
+            </strategy>
+        </jenkins.model.BuildDiscarderProperty>
+        <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty>
+            <abortPrevious>false</abortPrevious>
+        </org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty>
+        <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.39.0">
+            <projectUrl>https://github.com/Zhuravl/Java-TestNG-Selenide-ExtentReports-Maven-Log4J/</projectUrl>
+            <displayName></displayName>
+        </com.coravy.hudson.plugins.github.GithubProjectProperty>
+        <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+                <hudson.model.StringParameterDefinition>
+                    <name>TARGET_URL</name>
+                    <description>The target site URL</description>
+                    <defaultValue>https://usource.com.ua/</defaultValue>
+                    <trim>true</trim>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                    <name>BROWSER_NAME</name>
+                    <description>The target browser name (&apos;chrome&apos;, &apos;firefox&apos;, &apos;ie&apos;,
+                        &apos;opera&apos;, or &apos;edge&apos;)
+                    </description>
+                    <defaultValue>chrome</defaultValue>
+                    <trim>true</trim>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                    <name>BROWSER_VERSION</name>
+                    <description>The browser version, is optional (the latest by default)</description>
+                    <trim>true</trim>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                    <name>TESTS_SCOPE</name>
+                    <description>Name of tests to execute:
+                        - &apos;*Test&apos; - to run all existing tests
+                        - &apos;MyFirstTest&apos; - to run the whole class
+                        - &apos;MyFirstTest#firstMethod&apos; or &apos;MyFirstTest#firstMethod+secondMethod&apos; or
+                        &apos;MyFirstTest#firstMethod,MySecondTest#firstMethod&apos; - to run the specific test(s)
+                    </description>
+                    <defaultValue>*Test</defaultValue>
+                    <trim>true</trim>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                    <name>TIMEOUT</name>
+                    <description>The MAX timeout value (in seconds), is optional (15 sec by default)</description>
+                    <trim>false</trim>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                    <name>THREADS_COUNT</name>
+                    <description>To specify how many threads should be allocated for this execution, optional (1 thread
+                        by default)
+                    </description>
+                    <defaultValue>10</defaultValue>
+                    <trim>true</trim>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                    <name>BRANCH</name>
+                    <description>Git branch name to use</description>
+                    <defaultValue>master</defaultValue>
+                    <trim>false</trim>
+                </hudson.model.StringParameterDefinition>
+            </parameterDefinitions>
+        </hudson.model.ParametersDefinitionProperty>
+    </properties>
+    <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition"
+                plugin="workflow-cps@3894.3896.vca_2c931e7935">
+        <scm class="hudson.plugins.git.GitSCM" plugin="git@5.2.2">
+            <configVersion>2</configVersion>
+            <userRemoteConfigs>
+                <hudson.plugins.git.UserRemoteConfig>
+                    <url>git@github.com:Zhuravl/Java-TestNG-Selenide-ExtentReports-Maven-Log4J.git</url>
+                    <credentialsId>b89238f3-a11f-4914-8e7d-e9947584c14f</credentialsId>
+                </hudson.plugins.git.UserRemoteConfig>
+            </userRemoteConfigs>
+            <branches>
+                <hudson.plugins.git.BranchSpec>
+                    <name>*/${BRANCH}</name>
+                </hudson.plugins.git.BranchSpec>
+            </branches>
+            <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+            <submoduleCfg class="empty-list"/>
+            <extensions/>
+        </scm>
+        <scriptPath>vars/pipeline.groovy</scriptPath>
+        <lightweight>true</lightweight>
+    </definition>
+    <triggers/>
+    <disabled>false</disabled>
+</flow-definition>
