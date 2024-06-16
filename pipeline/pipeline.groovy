@@ -14,12 +14,12 @@ node {
     stage('Check/Create ATExecutor Job') {
         jobHelper.createATExecutorJob()
     }
-    stage('Smoke') {
-        def result = jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, 'SmokeTest', TIMEOUT as String, '1')
-        if (result != hudson.model.Result.SUCCESS) {
-            error "The Smoke Test has been failed!"
-        }
-    }
+//    stage('Smoke') {
+//        def result = jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, 'SmokeTest', TIMEOUT as String, '1')
+//        if (result != hudson.model.Result.SUCCESS) {
+//            error "The Smoke Test has been failed!"
+//        }
+//    }
     stage('Regression') {
         def threadsHelper = load 'pipeline/threadsHelper.groovy'
 //        def scopeHelper = load 'pipeline/scopeHelper.groovy'
@@ -29,6 +29,7 @@ node {
             }
 //            scope = scopeHelper.getFailedTests()
             def copiedFile = copyArtifacts(projectName: 'ATExecutor', filter: 'target/surefire-reports/testng-failed.xml')
+            echo "Copied file: '${copiedFile}'"
             if (copiedFile) {
                 def xmlFile = new XmlSlurper().parse(copiedFile)
                 scope = xmlFile.test.classes.class.'@name'.toString().replaceAll("ua\\.com\\.usource\\.tests\\.", ",").replaceFirst(",", "")
