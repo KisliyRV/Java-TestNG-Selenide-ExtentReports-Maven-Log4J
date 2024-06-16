@@ -33,7 +33,7 @@ node {
 //            echo "Copied file: '${copiedFile}'"
             def copiedFile = readFile('target/surefire-reports/testng-failed.xml')
             if (copiedFile) {
-                def xmlFile = new XmlSlurper().parse(copiedFile)
+                def xmlFile = new XmlSlurper().parseText(copiedFile)
                 scope = xmlFile.test.classes.class.'@name'.toString().replaceAll("ua\\.com\\.usource\\.tests\\.", ",").replaceFirst(",", "")
             } else {
                 scope = null
