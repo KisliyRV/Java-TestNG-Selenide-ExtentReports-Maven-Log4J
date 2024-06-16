@@ -28,7 +28,8 @@ node {
                 jobHelper.launchATExecutorJob(BRANCH as String, TARGET_URL as String, BROWSER_NAME as String, BROWSER_VERSION as String, scope, TIMEOUT as String, threads as String)
             }
 //            scope = scopeHelper.getFailedTests()
-            def copiedFile = copyArtifacts(projectName: 'ATExecutor', selector: lastCompleted(), filter: 'target/surefire-reports/testng-failed.xml')
+            copyArtifacts(projectName: 'ATExecutor', selector: lastCompleted(), filter: 'target/surefire-reports/testng-failed.xml', target: 'target/surefire-reports', flatten: true)
+            def copiedFile = './target/surefire-reports/testng-failed.xml'
             echo "Copied file: '${copiedFile}'"
             if (copiedFile) {
                 def xmlFile = new XmlSlurper().parse(copiedFile)
