@@ -29,8 +29,9 @@ node {
             }
 //            scope = scopeHelper.getFailedTests()
             copyArtifacts(projectName: 'ATExecutor', selector: lastCompleted(), filter: 'target/surefire-reports/testng-failed.xml', target: 'target/surefire-reports', flatten: true)
-            def copiedFile = load 'target/surefire-reports/testng-failed.xml'
-            echo "Copied file: '${copiedFile}'"
+//            def copiedFile = load 'target/surefire-reports/testng-failed.xml'
+//            echo "Copied file: '${copiedFile}'"
+            def copiedFile = readFile('target/surefire-reports/testng-failed.xml')
             if (copiedFile) {
                 def xmlFile = new XmlSlurper().parse(copiedFile)
                 scope = xmlFile.test.classes.class.'@name'.toString().replaceAll("ua\\.com\\.usource\\.tests\\.", ",").replaceFirst(",", "")
