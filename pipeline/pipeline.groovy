@@ -36,9 +36,9 @@ node {
                 def parser = new XmlParser(false, false)
                 parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false)
                 parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false)
-                def suite = parser.parseText(copiedFile)
-                echo 'XML:' + suite
-                scope = suite.test.classes.class*.@name.collect { it.text().replace("ua.com.usource.tests.", "") }.join(",").replaceFirst(",", "")
+                def xml = parser.parseText(copiedFile)
+                def testElement = xml.test
+                scope = testElement.classes.class*.@name.collect { it.text().replace("ua.com.usource.tests.", "") }.join(",").replaceFirst(",", "")
             } else {
                 scope = null
             }
