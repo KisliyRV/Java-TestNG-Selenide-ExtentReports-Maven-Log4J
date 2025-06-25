@@ -60,4 +60,21 @@ public class NavigationActions extends BaseActions {
         logger.info("Current URL: " + url);
         return url.contains(prefix);
     }
+
+    /**
+     * Authorization logic
+     */
+    public void loginTestUser(String user, String password) {
+        elements.setUsername(user);
+        elements.setPassword(password);
+        elements.clickButtonLogin();
+    }
+
+    /**
+     * Logic for exiting your personal account
+     */
+    public void logoutTestUser() {
+        elements.clickButtonUserMenu();
+        elements.clickButtonLogout();
+    }
 }
